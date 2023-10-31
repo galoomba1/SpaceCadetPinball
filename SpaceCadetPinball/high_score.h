@@ -16,7 +16,7 @@ struct high_score_entry
 class high_score
 {
 public:
-	static high_score_struct highscore_table[5];
+	static high_score_struct highscore_table[64];
 
 	static int read();
 	static int write();

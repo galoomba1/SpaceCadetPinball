@@ -10,7 +10,7 @@ bool high_score::dlg_enter_name;
 bool high_score::ShowDialog = false;
 high_score_entry high_score::DlgData;
 std::vector<high_score_entry> high_score::ScoreQueue;
-high_score_struct high_score::highscore_table[5];
+high_score_struct high_score::highscore_table[64];
 
 int high_score::read()
 {
@@ -18,7 +18,7 @@ int high_score::read()
 
 	int checkSum = 0;
 	clear_table();
-	for (auto position = 0; position < 5; ++position)
+	for (auto position = 0; position < 64; ++position)
 	{
 		auto& tablePtr = highscore_table[position];
 
@@ -48,7 +48,7 @@ int high_score::write()
 	char Buffer[20];
 
 	int checkSum = 0;
-	for (auto position = 0; position < 5; ++position)
+	for (auto position = 0; position < 64; ++position)
 	{
 		auto& tablePtr = highscore_table[position];
 
@@ -84,7 +84,7 @@ int high_score::get_score_position(int score)
 	if (score <= 0)
 		return -1;
 
-	for (int position = 0; position < 5; position++)
+	for (int position = 0; position < 64; position++)
 	{
 		if (highscore_table[position].Score < score)
 			return position;
@@ -94,7 +94,7 @@ int high_score::get_score_position(int score)
 
 void high_score::place_new_score_into(high_score_entry data)
 {
-	if (data.Position >= 0 && data.Position < 5)
+	if (data.Position >= 0 && data.Position < 64)
 	{
 		for (int i = 4; i > data.Position; i--)
 		{
@@ -129,7 +129,7 @@ void high_score::RenderHighScoreDialog()
 			{
 				DlgData = ScoreQueue.back();
 				ScoreQueue.pop_back();
-				if (DlgData.Position < 0 || DlgData.Position > 4)
+				if (DlgData.Position < 0 || DlgData.Position > 63)
 				{
 					DlgData.Position = get_score_position(DlgData.Entry.Score);
 				}
@@ -156,7 +156,7 @@ void high_score::RenderHighScoreDialog()
 			ImGui::TableSetupColumn(pb::get_rc_string(Msg::HIGHSCORES_Score));
 			ImGui::TableHeadersRow();
 
-			for (int offset = 0, row = 0; row < 5; row++)
+			for (int offset = 0, row = 0; row < 64; row++)
 			{
 				ImGui::TableNextRow();
 				ImGui::TableNextColumn();
