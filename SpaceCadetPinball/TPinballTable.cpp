@@ -251,15 +251,15 @@ int TPinballTable::AddScore(int score)
 	if (JackpotScoreFlag)
 	{
 		JackpotScore += score;
-		const auto jackpotLimit = !pb::FullTiltMode ? 5000000 : 10000000;
+		const auto jackpotLimit = !pb::FullTiltMode ? 20000 : 40000;
 		if (JackpotScore > jackpotLimit)
 			JackpotScore = jackpotLimit;
 	}
 	if (BonusScoreFlag)
 	{
 		BonusScore += score;
-		if (BonusScore > 5000000)
-			BonusScore = 5000000;
+		if (BonusScore > 20000)
+			BonusScore = 20000;
 	}
 	int addedScore = ScoreAdded + score * score_multipliers[ScoreMultiplier];
 	CurScore += addedScore;
@@ -460,7 +460,7 @@ int TPinballTable::Message(MessageCode code, float value)
 		{
 			// Multi-ball is FT exclusive feature, at least for now.
 			MultiballFlag = true;
-			JackpotScore = 500000;
+			JackpotScore = 2000;
 		}
 		midi::play_track(MidiTracks::Track1, true);
 		break;
@@ -577,9 +577,9 @@ int TPinballTable::Message(MessageCode code, float value)
 		ScoreMultiplier = 0;
 		ScoreAdded = 0;
 		ReflexShotScore = 0;
-		BonusScore = 10000;
+		BonusScore = 40;
 		BonusScoreFlag = false;
-		JackpotScore = 20000;
+		JackpotScore = 80;
 		JackpotScoreFlag = false;
 		UnknownP71 = 0;
 		ExtraBalls = 0;
